@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Product_SKU</name>
+        <label>Get Product SKU</label>
+        <locationX>538</locationX>
+        <locationY>218</locationY>
+        <actionName>getProductStockSAP.ProductStock</actionName>
+        <actionType>externalService</actionType>
+        <connector>
+            <targetReference>No_Stock_available</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Product_Error_Screen</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>productSKU</name>
+            <value>
+                <elementReference>productSKU</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>getProductStockSAP.ProductStock</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <decisions>
+        <name>No_Stock_available</name>
+        <label>No Stock available</label>
+        <locationX>692</locationX>
+        <locationY>220</locationY>
+        <defaultConnector>
+            <targetReference>Product_Stock_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Stock</defaultConnectorLabel>
+        <rules>
+            <name>No_Stock</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Product_SKU.2XX.qty</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Product_Stock_Screen_0</targetReference>
+            </connector>
+            <label>No Stock</label>
+        </rules>
+        <rules>
+            <name>Low_Stock</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Product_SKU.2XX.qty</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>50.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Product_Stock_Screen_0_0</targetReference>
+            </connector>
+            <label>Low Stock</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>restockDateFormula</name>
+        <dataType>Date</dataType>
+        <expression>DATE(VALUE(LEFT({!Get_Product_SKU.2XX.restockDate}, 4)) , VALUE(MID({!Get_Product_SKU.2XX.restockDate}, 5 ,2)) , VALUE(RIGHT({!Get_Product_SKU.2XX.restockDate}, 2)))</expression>
+    </formulas>
+    <interviewLabel>SCOM - Get Stock from SAP Real-Time {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <label>SCOM - Get Stock from SAP Real-Time</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Product_Error_Screen</name>
+        <label>Product Error Screen</label>
+        <locationX>538</locationX>
+        <locationY>429</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>StockInfoError</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;No stock information available&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Product_Stock_Screen</name>
+        <label>Product Stock Screen</label>
+        <locationX>926</locationX>
+        <locationY>209</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>StockInfoAvailable</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Stock status: &lt;/span&gt;&lt;span style=&quot;font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &apos;Segoe UI&apos;, Roboto, Helvetica, Arial, sans-serif, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;, &apos;Segoe UI Symbol&apos;);&quot;&gt;&lt;img src=&quot;https://vdupre-sap-cdo-demo.my.salesforce.com/servlet/servlet.ImageServer?id=015bk0000001JDV&amp;oid=00Dbk000000K02H&amp;lastMod=1725463505000&quot; alt=&quot;Basic_green_dot copy 2.png&quot;&gt; Available&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Stock available: {!Get_Product_SKU.2XX.qty}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Product_Stock_Screen_0</name>
+        <label>Product Stock Screen</label>
+        <locationX>703</locationX>
+        <locationY>430</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>StockInfo</name>
+            <fieldText>&lt;p&gt; Product not Available &lt;img src=&quot;https://vdupre-sap-cdo-demo.my.salesforce.com/servlet/servlet.ImageServer?id=015bk0000001JGj&amp;oid=00Dbk000000K02H&amp;lastMod=1725463872000&quot; alt=&quot;Basic_red_dot.png&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Restock Planned Date: {!Get_Product_SKU.2XX.restockDate}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Product_Stock_Screen_0_0</name>
+        <label>Product Stock Screen</label>
+        <locationX>938</locationX>
+        <locationY>351</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>StockInfoAvailable_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Stock status: &lt;/span&gt;&lt;span style=&quot;font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &apos;Segoe UI&apos;, Roboto, Helvetica, Arial, sans-serif, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;, &apos;Segoe UI Symbol&apos;);&quot;&gt;&lt;img src=&quot;https://vdupre-sap-cdo-demo.my.salesforce.com/servlet/servlet.ImageServer?id=015bk0000001JF7&amp;oid=00Dbk000000K02H&amp;lastMod=1725463851000&quot; alt=&quot;GAudit_YellowDot.png&quot;&gt; Low Stock&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Stock available: {!Get_Product_SKU.2XX.qty}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>412</locationX>
+        <locationY>49</locationY>
+        <connector>
+            <targetReference>Get_Product_SKU</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>SKU of the current product</description>
+        <name>productSKU</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

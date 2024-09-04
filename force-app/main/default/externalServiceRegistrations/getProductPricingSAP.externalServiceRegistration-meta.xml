@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Get product price from SAP</description>
+    <label>getProductPricingSAP</label>
+    <namedCredentialReference>SAP</namedCredentialReference>
+    <operations>
+        <active>true</active>
+        <name>productprice</name>
+    </operations>
+    <registrationProviderType>Custom</registrationProviderType>
+    <schema>{
+  &quot;openapi&quot;: &quot;3.0.1&quot;,
+  &quot;info&quot;: {
+    &quot;title&quot;: &quot;ProductPrice&quot;,
+    &quot;description&quot;: &quot;&quot;
+  },
+  &quot;paths&quot;: {
+    &quot;/ProductPrice&quot;: {
+      &quot;get&quot;: {
+        &quot;description&quot;: &quot;&quot;,
+        &quot;operationId&quot;: &quot;ProductPrice&quot;,
+        &quot;parameters&quot;: [{
+            &quot;name&quot;: &quot;accountId&quot;,
+            &quot;in&quot;: &quot;query&quot;,
+            &quot;description&quot;: &quot;Account ID&quot;,
+            &quot;required&quot;: true,
+            &quot;allowEmptyValue&quot;: false,
+            &quot;schema&quot;: {
+              &quot;type&quot;: &quot;string&quot;
+            }
+          },
+          {
+            &quot;name&quot;: &quot;productId&quot;,
+            &quot;in&quot;: &quot;query&quot;,
+            &quot;description&quot;: &quot;Product SKU&quot;,
+            &quot;required&quot;: true,
+            &quot;allowEmptyValue&quot;: false,
+            &quot;schema&quot;: {
+              &quot;type&quot;: &quot;string&quot;
+            }
+          }
+        ],
+        &quot;responses&quot;: {
+          &quot;2XX&quot;: {
+            &quot;description&quot;: &quot;&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;:{
+                  &quot;type&quot;:&quot;object&quot;,
+                  &quot;properties&quot;:{
+                  &quot;stdPrice&quot;:{
+                  &quot;type&quot;:&quot;number&quot;
+                  },
+                  &quot;negoPrice&quot;:{
+                  &quot;type&quot;:&quot;number&quot;
+                  }
+                 }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</schema>
+    <schemaType>OpenApi3</schemaType>
+    <serviceBinding>{&quot;host&quot;:&quot;&quot;,&quot;basePath&quot;:&quot;/&quot;,&quot;allowedSchemes&quot;:[],&quot;requestMediaTypes&quot;:[],&quot;responseMediaTypes&quot;:[],&quot;compatibleMediaTypes&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>5</systemVersion>
+</ExternalServiceRegistration>

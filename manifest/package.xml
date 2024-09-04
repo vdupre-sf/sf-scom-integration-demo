@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+   <!--<types>
+        <members>OrderSummary.Approve</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>createSAPOrderService</members>
+        <name>ApexClass</name>
+    </types>
+    
+    <types>
+        <members>SAP</members>
+        <name>NamedCredential</name>
+    </types>
+    <types>
+        <members>OS_Approve_Order_and_Send_to_SAP</members>
+        <members>SCOM_Get_Stock_from_SAP_Real_Time</members>
+        <members>SCOM_Get_Price_from_SAP_Real_Time</members>
+        <members>CIT_Cart_Item_Trigger</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Product2.SAP_Pricing__c</members>
+        <members>Product2.SAP_Stock__c</members>
+        <members>CartItem.Has_SAP_Pricing__c</members>
+        <members>OrderSummary.SAP_Order_ID__c</members>
+        <members>OrderSummary.Last_SAP_Sync_Date__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>CreateSAPOrder</members>
+        <members>getProductPricingSAP</members>
+        <name>ExternalServiceRegistration</name>
+    </types>   
+
+    <types>
+        <members>Admin</members>
+        <members>SDO-Customer Community Plus</members>
+        <name>Profile</name>
+    </types>-->
+
+    <types>
+        <members>SCOM_Get_Stock_from_SAP_Real_Time</members>
+        <name>Flow</name>
+    </types>
+
+    <version>61.0</version>
+</Package>
